@@ -7,10 +7,10 @@ public class Main extends GameApplication {
 
     @Override
     protected void initSettings(GameSettings settings) {
-        settings.setWidth(800);
+        settings.setWidth(1100);
         settings.setHeight(600);
-        settings.setTitle("Meu Primeiro Jogo FXGL");
-        settings.setVersion("1.0");
+        settings.setTitle("Cabeçotes");
+        settings.setVersion("alpha 1.0");
     }
 
     @Override
