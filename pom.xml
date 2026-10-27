@@ -34,7 +34,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.5.0</version>
                 <configuration>
-                    <mainClass>com.exemplo.Main</mainClass>
+                    <mainClass>com.cabecotes.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
