@@ -6,7 +6,8 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.cabecotes.model.entities.Floor;
 import javafx.scene.input.KeyCode;
-import com.cabecotes.model.entities.Player; // <--- Importando a classe Player da outra pasta!
+import com.cabecotes.model.entities.Player;
+import com.cabecotes.model.components.PlayerControle;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
@@ -33,34 +34,17 @@ public class Main extends GameApplication
         chao = Floor.criarChao(300, 300, 600, 20);
     }
 
-    protected void initInput()
-    {
-        onKey(KeyCode.RIGHT, () ->
-        {
-            player.translateX(5);
-        });
-
-        onKey(KeyCode.LEFT, () ->
-        {
-            player.translateX(-5);
-        });
-
-        onKey(KeyCode.UP, () ->
-        {
-            player.translateY(-5);
-        });
-
-        onKey(KeyCode.DOWN, () ->
-        {
-            player.translateY(5);
-        });
-    }
-
     @Override
     protected void initPhysics()
     {
         // definir gravidade do jogo
         getPhysicsWorld().setGravity(0, 760);
+    }
+
+    protected void initInput() {
+        onKey(KeyCode.RIGHT, () -> player.getComponent(PlayerControle.class).moverDireita());
+        onKey(KeyCode.LEFT, () -> player.getComponent(PlayerControle.class).moverEsquerda());
+        onKey(KeyCode.UP, () -> player.getComponent(PlayerControle.class).pular());
     }
 
     public static void main(String[] args)
