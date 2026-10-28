@@ -1,4 +1,4 @@
-package com.cabecotes;
+package com.cabecotes.main;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
