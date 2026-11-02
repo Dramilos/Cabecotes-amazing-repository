@@ -4,6 +4,7 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.cabecotes.model.entities.Ball;
 import com.cabecotes.model.entities.Floor;
 import javafx.scene.input.KeyCode;
 import com.cabecotes.model.entities.Player;
@@ -14,7 +15,9 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 public class Main extends GameApplication
 {
     // referências pra gente ter acesso
-    private Entity player;
+    private Entity player1;
+    private Entity player2;
+    private Entity bola;
     private Entity chao;
 
     @Override
@@ -30,8 +33,10 @@ public class Main extends GameApplication
     @Override
     protected void initGame()
     {
-        player = Player.criarPlayer(380, 190);
-        chao = Floor.criarChao(300, 300, 600, 20);
+        player1 = Player.criarPlayer(380, 190);
+        player2 = Player.criarPlayer(600, 190);
+        chao = Floor.criarChao(0, 580, 1100, 20);
+        bola = Ball.criarBola(500, 100);
     }
 
     @Override
@@ -42,9 +47,13 @@ public class Main extends GameApplication
     }
 
     protected void initInput() {
-        onKey(KeyCode.RIGHT, () -> player.getComponent(PlayerControle.class).moverDireita());
-        onKey(KeyCode.LEFT, () -> player.getComponent(PlayerControle.class).moverEsquerda());
-        onKey(KeyCode.UP, () -> player.getComponent(PlayerControle.class).pular());
+        onKey(KeyCode.RIGHT, () -> player2.getComponent(PlayerControle.class).moverDireita());
+        onKey(KeyCode.LEFT, () -> player2.getComponent(PlayerControle.class).moverEsquerda());
+        onKey(KeyCode.UP, () -> player2.getComponent(PlayerControle.class).pular());
+
+        onKey(KeyCode.D, () -> player1.getComponent(PlayerControle.class).moverDireita());
+        onKey(KeyCode.A, () -> player1.getComponent(PlayerControle.class).moverEsquerda());
+        onKey(KeyCode.W, () -> player1.getComponent(PlayerControle.class).pular());
     }
 
     public static void main(String[] args)

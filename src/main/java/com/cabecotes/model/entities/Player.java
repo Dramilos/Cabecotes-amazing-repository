@@ -10,6 +10,7 @@ import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.geometry.Point2D;
 
 import com.cabecotes.model.components.PlayerControle;
 import static com.almasb.fxgl.dsl.FXGL.onKey;
@@ -26,6 +27,12 @@ public class Player
         BodyDef bd = new BodyDef();
         bd.setType(BodyType.DYNAMIC);
         physics.setBodyDef(bd);
+        physics.addGroundSensor(
+            new HitBox(
+            new Point2D(5, 35),
+            BoundingShape.box(30, 10)
+            )
+        );
 
         // construtor de entidades player
         return FXGL.entityBuilder()
