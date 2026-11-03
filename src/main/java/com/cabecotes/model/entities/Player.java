@@ -7,6 +7,8 @@ import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
+import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
+
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -33,6 +35,11 @@ public class Player
             BoundingShape.box(30, 10)
             )
         );
+
+        // atrito do player
+        FixtureDef fd = new FixtureDef();
+        fd.setFriction(0.9f);
+        physics.setFixtureDef(fd);
 
         // construtor de entidades player
         return FXGL.entityBuilder()

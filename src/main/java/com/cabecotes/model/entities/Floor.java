@@ -7,6 +7,8 @@ import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
+import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -21,6 +23,11 @@ public class Floor
         BodyDef bd = new BodyDef();
         bd.setType(BodyType.STATIC); // static, porque o chão não cai (eu espero)
         physics.setBodyDef(bd);
+
+        // atrito do chao
+        FixtureDef fd = new FixtureDef();
+        fd.setFriction(0.85f);
+        physics.setFixtureDef(fd);
 
         // constrói a entidade chão
         return FXGL.entityBuilder()
