@@ -23,7 +23,11 @@ public class PlayerControle extends Component
         physics.setVelocityX(-150);
     }
 
-    public void pular() {
-        physics.setVelocityY(-300);
+    public void pular()
+    {
+        if(physics.isOnGround())
+        {
+            physics.setVelocityY(-300);
+        }
     }
 }
