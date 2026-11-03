@@ -58,6 +58,12 @@ public class Main extends GameApplication
         onKey(KeyCode.D, () -> player1.getComponent(PlayerControle.class).moverDireita());
         onKey(KeyCode.A, () -> player1.getComponent(PlayerControle.class).moverEsquerda());
         onKey(KeyCode.W, () -> player1.getComponent(PlayerControle.class).pular());
+
+        // Chute do Player 1
+        onKeyDown(KeyCode.F, () -> player1.getComponent(PlayerControle.class).chutar(bola));
+
+        // Chute do Player 2
+        onKeyDown(KeyCode.ENTER, () -> player2.getComponent(PlayerControle.class).chutar(bola));
     }
 
     public static void main(String[] args)

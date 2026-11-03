@@ -27,5 +27,29 @@ public class PlayerControle extends Component
     if (physics.isOnGround()) {
         physics.setVelocityY(-300);
     }
+    
     }
+
+    public void chutar(Entity bola) {
+        
+        double distanciaX = bola.getCenter().getX() - entity.getCenter().getX();
+        double distanciaY = bola.getCenter().getY() - entity.getCenter().getY();
+
+        if (Math.abs(distanciaX) <= 65 && Math.abs(distanciaY) <= 65) {
+
+            PhysicsComponent fisicaBola = bola.getComponent(PhysicsComponent.class);
+
+            if (distanciaX >= 0) {
+
+                fisicaBola.setVelocityX(420);
+
+            } else {
+
+                fisicaBola.setVelocityX(-420);
+
+            }
+
+            fisicaBola.setVelocityY(-220);
+        }
+    }       
 }
