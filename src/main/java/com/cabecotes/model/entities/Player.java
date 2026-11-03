@@ -28,6 +28,7 @@ public class Player
         PhysicsComponent physics = new PhysicsComponent();
         BodyDef bd = new BodyDef();
         bd.setType(BodyType.DYNAMIC);
+        bd.setFixedRotation(true);
         physics.setBodyDef(bd);
         physics.addGroundSensor(
             new HitBox(
@@ -39,6 +40,7 @@ public class Player
         // atrito do player
         FixtureDef fd = new FixtureDef();
         fd.setFriction(0.9f);
+        fd.setDensity(1.6f);
         physics.setFixtureDef(fd);
 
         // construtor de entidades player
