@@ -25,7 +25,8 @@ public class Ball {
 
         FixtureDef fixture = new FixtureDef();
         fixture.setRestitution(0.8f);
-        fixture.setFriction(0.3f);
+        fixture.setFriction(0.4f);
+        fixture.setDensity(0.65f);
         physics.setFixtureDef(fixture);
 
         return FXGL.entityBuilder()

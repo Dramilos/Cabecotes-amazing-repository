@@ -16,7 +16,7 @@ public class Floor
 {
 
     // método da classe de chão pra criar um chão
-    public static Entity criarChao(double x, double y, double largura, double altura) {
+    public static Entity criarChao(double x, double y, double largura, double altura, float atrito) {
 
         // componente de física do FXGL, definir o tipo de corpo que nosso objeto tem
         PhysicsComponent physics = new PhysicsComponent();
@@ -26,7 +26,7 @@ public class Floor
 
         // atrito do chao
         FixtureDef fd = new FixtureDef();
-        fd.setFriction(0.85f);
+        fd.setFriction(atrito);
         physics.setFixtureDef(fd);
 
         // constrói a entidade chão

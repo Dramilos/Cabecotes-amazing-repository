@@ -19,8 +19,8 @@ public class Main extends GameApplication
     private Entity player2;
     private Entity bola;
     private Entity chao;
-    private Entity chao_E;
-    private Entity chao_D;
+    private Entity paredeE;
+    private Entity paredeD;
 
     @Override
     protected void initSettings(GameSettings settings)
@@ -37,9 +37,9 @@ public class Main extends GameApplication
     {
         player1 = Player.criarPlayer(380, 190);
         player2 = Player.criarPlayer(600, 190);
-        chao = Floor.criarChao(0, 580, 1100, 20);
-        chao_E = Floor.criarChao( 0, 0, 0,600);
-        chao_D = Floor.criarChao( 1100, 0, 0,600);
+        chao = Floor.criarChao(0, 580, 1100, 20, 0.85f);
+        paredeE = Floor.criarChao( 0, 0, 0,800, 0);
+        paredeD = Floor.criarChao( 1100, 0, 0,800, 0);
         bola = Ball.criarBola(500, 100);
     }
 
