@@ -13,6 +13,8 @@ import javafx.scene.input.KeyCode;
 import com.cabecotes.model.entities.Player;
 import com.cabecotes.model.components.PlayerControle;
 import javafx.util.Duration;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
@@ -25,6 +27,8 @@ public class Main extends GameApplication
     private Entity paredeE, paredeD;
     private Entity golD, golE;
 
+    private boolean golMarcado = false;
+
     @Override
     protected void initSettings(GameSettings settings)
     {
@@ -32,20 +36,16 @@ public class Main extends GameApplication
         settings.setWidth(1100);
         settings.setHeight(600);
         settings.setTitle("Cabeçotes");
-        settings.setVersion("alpha 1.0");
+        settings.setVersion("alpha 1.1");
     }
 
     @Override
     protected void initGame()
     {
-        player1 = Player.criarPlayer(800, 510);
-        player2 = Player.criarPlayer(300, 510);
+        reiniciarPartida();
         chao = Floor.criarChao(0, 550, 1100, 50, 0.85f);
         paredeE = Floor.criarChao( 0, 0, 0,800, 0);
         paredeD = Floor.criarChao( 1100, 0, 0,800, 0);
-        bola = Ball.criarBola(550, 100);
-        golD = Gol.criarGol(1000, 350, 70, 200);
-        golE = Gol.criarGol(30, 350, 70, 200);
     }
 
     @Override
@@ -54,12 +54,13 @@ public class Main extends GameApplication
         // definir gravidade do jogo
         getPhysicsWorld().setGravity(0, 760);
 
-        // Regra de colisão: Bola toca no Gol
         onCollisionBegin(EntityType.BALL, EntityType.GOL, (ballEntity, goalEntity) -> {
-            System.out.println("GOOOOL!");
+            // Regra de colisão: Bola toca no Gol
+            if (golMarcado) {
+                return;
+            }
 
-            // 1. Opcional: Você pode pausar a física da bola momentaneamente para ela não ficar voando
-            ballEntity.getComponent(PhysicsComponent.class).setLinearVelocity(0, 0);
+            golMarcado = true;
 
             getGameTimer().runOnceAfter(this::reiniciarPartida, Duration.seconds(2));
         });
@@ -79,6 +80,8 @@ public class Main extends GameApplication
         bola = Ball.criarBola(550, 100);
         golD = Gol.criarGol(1000, 350, 70, 200);
         golE = Gol.criarGol(30, 350, 70, 200);
+
+        golMarcado = false;
     }
 
     protected void initInput() {
