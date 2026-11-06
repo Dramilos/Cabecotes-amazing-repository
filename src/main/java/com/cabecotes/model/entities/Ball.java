@@ -10,6 +10,7 @@ import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 
+import com.cabecotes.model.EntityType;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -30,12 +31,13 @@ public class Ball {
         physics.setFixtureDef(fixture);
 
         return FXGL.entityBuilder()
-        .at(x, y)
-        .view(new Circle(10, 10, 10, Color.BLACK))
-        .with(physics)
-        .bbox(new HitBox(BoundingShape.circle(10)))
-        .collidable()
-        .buildAndAttach();
+                .type(EntityType.BALL)
+                .at(x, y)
+                .view(new Circle(10, 10, 10, Color.BLACK))
+                .with(physics)
+                .bbox(new HitBox(BoundingShape.circle(10)))
+                .collidable()
+                .buildAndAttach();
 
 
 

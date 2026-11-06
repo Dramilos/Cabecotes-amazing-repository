@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.geometry.Point2D;
 
+import com.cabecotes.model.EntityType;
 import com.cabecotes.model.components.PlayerControle;
 import static com.almasb.fxgl.dsl.FXGL.onKey;
 
@@ -45,6 +46,7 @@ public class Player
 
         // construtor de entidades player
         return FXGL.entityBuilder()
+                .type(EntityType.PLAYER)
                 .at(x, y)
                 .view(new Rectangle(40, 40, Color.BLUE))
                 .with(physics)
