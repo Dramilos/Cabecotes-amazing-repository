@@ -41,7 +41,7 @@ public class Player
         // atrito do player
         FixtureDef fd = new FixtureDef();
         fd.setFriction(0.9f);
-        fd.setDensity(1.6f);
+        fd.setDensity(1.8f);
         physics.setFixtureDef(fd);
 
         // construtor de entidades player

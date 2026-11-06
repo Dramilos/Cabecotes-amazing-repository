@@ -4,23 +4,26 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.physics.PhysicsComponent;
+import com.cabecotes.model.EntityType;
 import com.cabecotes.model.entities.Ball;
 import com.cabecotes.model.entities.Floor;
+import com.cabecotes.model.entities.Gol;
 import javafx.scene.input.KeyCode;
 import com.cabecotes.model.entities.Player;
 import com.cabecotes.model.components.PlayerControle;
+import javafx.util.Duration;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class Main extends GameApplication
 {
     // referências pra gente ter acesso
-    private Entity player1;
-    private Entity player2;
+    private Entity player1, player2;
     private Entity bola;
     private Entity chao;
-    private Entity paredeE;
-    private Entity paredeD;
+    private Entity paredeE, paredeD;
+    private Entity golD, golE;
 
     @Override
     protected void initSettings(GameSettings settings)
@@ -35,12 +38,14 @@ public class Main extends GameApplication
     @Override
     protected void initGame()
     {
-        player1 = Player.criarPlayer(380, 190);
-        player2 = Player.criarPlayer(600, 190);
-        chao = Floor.criarChao(0, 580, 1100, 20, 0.85f);
+        player1 = Player.criarPlayer(800, 510);
+        player2 = Player.criarPlayer(300, 510);
+        chao = Floor.criarChao(0, 550, 1100, 50, 0.85f);
         paredeE = Floor.criarChao( 0, 0, 0,800, 0);
         paredeD = Floor.criarChao( 1100, 0, 0,800, 0);
-        bola = Ball.criarBola(500, 100);
+        bola = Ball.criarBola(550, 100);
+        golD = Gol.criarGol(1000, 350, 70, 200);
+        golE = Gol.criarGol(30, 350, 70, 200);
     }
 
     @Override
@@ -48,6 +53,32 @@ public class Main extends GameApplication
     {
         // definir gravidade do jogo
         getPhysicsWorld().setGravity(0, 760);
+
+        // Regra de colisão: Bola toca no Gol
+        onCollisionBegin(EntityType.BALL, EntityType.GOL, (ballEntity, goalEntity) -> {
+            System.out.println("GOOOOL!");
+
+            // 1. Opcional: Você pode pausar a física da bola momentaneamente para ela não ficar voando
+            ballEntity.getComponent(PhysicsComponent.class).setLinearVelocity(0, 0);
+
+            getGameTimer().runOnceAfter(this::reiniciarPartida, Duration.seconds(2));
+        });
+    }
+
+    private void reiniciarPartida() {
+        // tirar todas as entidades do mapa
+        if (player1 != null) player1.removeFromWorld();
+        if (player2 != null) player2.removeFromWorld();
+        if (bola != null) bola.removeFromWorld();
+        if (golD != null) golD.removeFromWorld();
+        if (golE != null) golE.removeFromWorld();
+
+        // recriar todas elas pra reiniciar
+        player1 = Player.criarPlayer(800, 510);
+        player2 = Player.criarPlayer(300, 510);
+        bola = Ball.criarBola(550, 100);
+        golD = Gol.criarGol(1000, 350, 70, 200);
+        golE = Gol.criarGol(30, 350, 70, 200);
     }
 
     protected void initInput() {
