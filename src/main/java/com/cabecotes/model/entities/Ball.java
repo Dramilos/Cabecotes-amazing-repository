@@ -18,7 +18,6 @@ public class Ball {
 
     public static Entity criarBola(double x, double y){
 
-
         PhysicsComponent physics = new PhysicsComponent();
         BodyDef bd = new BodyDef();
         bd.setType(BodyType.DYNAMIC);
@@ -33,13 +32,10 @@ public class Ball {
         return FXGL.entityBuilder()
                 .type(EntityType.BALL)
                 .at(x, y)
-                .view(new Circle(10, 10, 10, Color.BLACK))
+                .view(new Circle(12, 12, 12, Color.BLACK))
                 .with(physics)
-                .bbox(new HitBox(BoundingShape.circle(10)))
+                .bbox(new HitBox(BoundingShape.circle(12)))
                 .collidable()
                 .buildAndAttach();
-
-
-
     }
 }

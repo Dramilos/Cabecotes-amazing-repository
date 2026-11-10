@@ -13,31 +13,33 @@ import com.cabecotes.model.EntityType;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Floor
-{
+public class Floor {
 
-    // método da classe de chão pra criar um chão
-    public static Entity criarChao(double x, double y, double largura, double altura, float atrito) {
-
-        // componente de física do FXGL, definir o tipo de corpo que nosso objeto tem
+    // Método base interno que lida com a física dos objetos estáticos
+    protected static Entity criarObjetoEstatico(double x, double y, double largura, double altura, float atrito, float restitution, EntityType tipo, Color cor) {
         PhysicsComponent physics = new PhysicsComponent();
         BodyDef bd = new BodyDef();
-        bd.setType(BodyType.STATIC); // static, porque o chão não cai (eu espero)
+        bd.setType(BodyType.STATIC);
         physics.setBodyDef(bd);
 
-        // atrito do chao
+        // atrito e restituicao
         FixtureDef fd = new FixtureDef();
+        fd.setRestitution(restitution);
         fd.setFriction(atrito);
         physics.setFixtureDef(fd);
 
-        // constrói a entidade chão
         return FXGL.entityBuilder()
-                .type(EntityType.FLOOR)
+                .type(tipo)
                 .at(x, y)
-                .view(new Rectangle(largura, altura, Color.GREEN))
-                .with(physics)  // tem física
-                .collidable()   // colide
-                .bbox(new HitBox(BoundingShape.box(largura, altura)))      // definindo a hitbox
+                .view(new Rectangle(largura, altura, cor))
+                .with(physics)
+                .collidable()
+                .bbox(new HitBox(BoundingShape.box(largura, altura)))
                 .buildAndAttach();
+    }
+
+    // metodo pra criar o chao
+    public static Entity criarChao(double x, double y, double largura, double altura) {
+        return criarObjetoEstatico(x, y, largura, altura, 0.5f, 0.0f, EntityType.FLOOR, Color.GREEN);
     }
 }

@@ -4,5 +4,6 @@ public enum EntityType {
     PLAYER,
     FLOOR,
     BALL,
-    GOL
+    GOL,
+    TRAVE
 }

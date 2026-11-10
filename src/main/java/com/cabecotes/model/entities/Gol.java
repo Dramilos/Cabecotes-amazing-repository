@@ -28,7 +28,7 @@ public class Gol {
                 .type(EntityType.GOL)
                 .at(x, y)
                 .view(new Rectangle(largura, altura, Color.CADETBLUE))
-                .bbox(new HitBox(BoundingShape.box(largura, altura)))
+                .bbox(new HitBox(BoundingShape.box(largura, altura), true))
                 .with(physics)
                 .collidable()
                 .buildAndAttach();

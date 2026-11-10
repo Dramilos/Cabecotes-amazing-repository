@@ -6,11 +6,8 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.cabecotes.model.EntityType;
-import com.cabecotes.model.entities.Ball;
-import com.cabecotes.model.entities.Floor;
-import com.cabecotes.model.entities.Gol;
+import com.cabecotes.model.entities.*;
 import javafx.scene.input.KeyCode;
-import com.cabecotes.model.entities.Player;
 import com.cabecotes.model.components.PlayerControle;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
@@ -23,7 +20,7 @@ public class Main extends GameApplication
     // referências pra gente ter acesso
     private Entity player1, player2;
     private Entity bola;
-    private Entity chao;
+    private Entity chao, traveE, traveD;
     private Entity paredeE, paredeD;
     private Entity golD, golE;
 
@@ -43,16 +40,18 @@ public class Main extends GameApplication
     protected void initGame()
     {
         reiniciarPartida();
-        chao = Floor.criarChao(0, 550, 1100, 50, 0.85f);
-        paredeE = Floor.criarChao( 0, 0, 0,800, 0);
-        paredeD = Floor.criarChao( 1100, 0, 0,800, 0);
+        chao = Floor.criarChao(0, 550, 1100, 50);
+        traveE = Trave.criarTrave(1020, 340, 80, 10);
+        traveD = Trave.criarTrave(0, 340, 80, 10);
+        paredeE = Floor.criarChao( 0, 0, 0,800);
+        paredeD = Floor.criarChao( 1100, 0, 0,800);
     }
 
     @Override
     protected void initPhysics()
     {
         // definir gravidade do jogo
-        getPhysicsWorld().setGravity(0, 760);
+        getPhysicsWorld().setGravity(0, 660);
 
         onCollisionBegin(EntityType.BALL, EntityType.GOL, (ballEntity, goalEntity) -> {
             // Regra de colisão: Bola toca no Gol
@@ -85,19 +84,19 @@ public class Main extends GameApplication
     }
 
     protected void initInput() {
-        onKey(KeyCode.RIGHT, () -> player2.getComponent(PlayerControle.class).moverDireita());
-        onKey(KeyCode.LEFT, () -> player2.getComponent(PlayerControle.class).moverEsquerda());
-        onKey(KeyCode.UP, () -> player2.getComponent(PlayerControle.class).pular());
+        onKey(KeyCode.RIGHT, () -> player1.getComponent(PlayerControle.class).moverDireita());
+        onKey(KeyCode.LEFT, () -> player1.getComponent(PlayerControle.class).moverEsquerda());
+        onKey(KeyCode.UP, () -> player1.getComponent(PlayerControle.class).pular());
 
-        onKey(KeyCode.D, () -> player1.getComponent(PlayerControle.class).moverDireita());
-        onKey(KeyCode.A, () -> player1.getComponent(PlayerControle.class).moverEsquerda());
-        onKey(KeyCode.W, () -> player1.getComponent(PlayerControle.class).pular());
-
-        // Chute do Player 1
-        onKeyDown(KeyCode.SPACE, () -> player1.getComponent(PlayerControle.class).chutar(bola));
+        onKey(KeyCode.D, () -> player2.getComponent(PlayerControle.class).moverDireita());
+        onKey(KeyCode.A, () -> player2.getComponent(PlayerControle.class).moverEsquerda());
+        onKey(KeyCode.W, () -> player2.getComponent(PlayerControle.class).pular());
 
         // Chute do Player 2
-        onKeyDown(KeyCode.P, () -> player2.getComponent(PlayerControle.class).chutar(bola));
+        onKeyDown(KeyCode.SPACE, () -> player2.getComponent(PlayerControle.class).chutar(bola));
+
+        // Chute do Player 1
+        onKeyDown(KeyCode.P, () -> player1.getComponent(PlayerControle.class).chutar(bola));
     }
 
     public static void main(String[] args)

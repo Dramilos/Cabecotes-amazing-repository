@@ -24,9 +24,9 @@ public class PlayerControle extends Component
     }
 
     public void pular() {
-    if (physics.isOnGround()) {
-        physics.setVelocityY(-320);
-    }
+        if (physics.isOnGround()) {
+            physics.setVelocityY(-320);
+        }
     
     }
 
