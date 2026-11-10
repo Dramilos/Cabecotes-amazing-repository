@@ -21,15 +21,13 @@ public class Gol {
 
         // atrito
         FixtureDef fd = new FixtureDef();
-        fd.setFriction(0f);
         physics.setFixtureDef(fd);
 
         return FXGL.entityBuilder()
                 .type(EntityType.GOL)
                 .at(x, y)
                 .view(new Rectangle(largura, altura, Color.CADETBLUE))
-                .bbox(new HitBox(BoundingShape.box(largura, altura), true))
-                .with(physics)
+                .bbox(new HitBox(BoundingShape.box(largura, altura)))
                 .collidable()
                 .buildAndAttach();
     }
