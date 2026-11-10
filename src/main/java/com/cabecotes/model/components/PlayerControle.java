@@ -16,16 +16,16 @@ public class PlayerControle extends Component
     private PhysicsComponent physics;
 
     public void moverDireita() {
-        physics.setVelocityX(150);
+        physics.setVelocityX(210);
     }
 
     public void moverEsquerda() {
-        physics.setVelocityX(-150);
+        physics.setVelocityX(-210);
     }
 
     public void pular() {
     if (physics.isOnGround()) {
-        physics.setVelocityY(-300);
+        physics.setVelocityY(-320);
     }
     
     }

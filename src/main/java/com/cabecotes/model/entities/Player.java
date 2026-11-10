@@ -34,7 +34,7 @@ public class Player
         physics.addGroundSensor(
             new HitBox(
             new Point2D(5, 35),
-            BoundingShape.box(30, 10)
+            BoundingShape.box(30, 20)
             )
         );
 
