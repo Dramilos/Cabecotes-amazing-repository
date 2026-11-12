@@ -2,13 +2,18 @@ package com.cabecotes.main;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.cabecotes.model.EntityType;
 import com.cabecotes.model.entities.*;
+import javafx.geometry.Pos;
 import javafx.scene.input.KeyCode;
+import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.cabecotes.model.components.PlayerControle;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -25,6 +30,8 @@ public class Main extends GameApplication
     private Entity golD, golE;
 
     private boolean golMarcado = false;
+    private boolean bolaIsolada = false;
+    private int tempo = 0;
 
     @Override
     protected void initSettings(GameSettings settings)
@@ -34,6 +41,15 @@ public class Main extends GameApplication
         settings.setHeight(600);
         settings.setTitle("Cabeçotes");
         settings.setVersion("alpha 1.1");
+        settings.setMainMenuEnabled(true);
+
+        // Diz ao FXGL qual classe deve gerenciar o menu principal
+        settings.setSceneFactory(new SceneFactory() {
+            @Override
+            public FXGLMenu newMainMenu() {
+                return new Menu(); // Retorna a nossa classe Menu recém-criada
+            }
+        });
     }
 
     @Override
@@ -54,7 +70,7 @@ public class Main extends GameApplication
         getPhysicsWorld().setGravity(0, 660);
 
         onCollisionBegin(EntityType.BALL, EntityType.GOL, (ballEntity, goalEntity) -> {
-            // Regra de colisão: Bola toca no Gol
+            // se marcou gol ele nao deixa marcar de novo
             if (golMarcado) {
                 return;
             }
@@ -81,6 +97,35 @@ public class Main extends GameApplication
         golE = Gol.criarGol(10, 350, 70, 200);
 
         golMarcado = false;
+        bolaIsolada = false;
+    }
+
+    @Override
+    protected void onUpdate(double tpf) {
+
+        if(golMarcado || bolaIsolada)
+        {
+            return;
+        }
+
+        if (bola != null && bola.isActive()) {
+            double x = bola.getPosition().getX();
+            double y = bola.getPosition().getY();
+
+            if (x > 1100 || x < 0 || y > 800) {
+                bolaIsolada = true;
+                Text vacilou = new Text("isolou a bola lol");
+                vacilou.setFont(Font.font(64));
+                vacilou.setFill(Color.BLACK);
+
+                vacilou.setTranslateX(300);
+                vacilou.setTranslateY(300);
+
+                addUINode(vacilou);
+
+                getGameTimer().runOnceAfter(this::reiniciarPartida, Duration.seconds(2));
+            }
+        }
     }
 
     protected void initInput() {

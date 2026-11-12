@@ -52,7 +52,7 @@ public class Player
                 .with(physics)
                 .with(new PlayerControle())
                 .collidable()
-                .bbox(new HitBox(BoundingShape.circle(20)))
+                .bbox(new HitBox(BoundingShape.box(40,40)))
                 .bbox(new HitBox(new Point2D(5, 40), BoundingShape.box(30, 8)))
                 .buildAndAttach();
     }
