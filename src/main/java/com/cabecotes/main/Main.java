@@ -31,7 +31,6 @@ public class Main extends GameApplication
 
     private boolean golMarcado = false;
     private boolean bolaIsolada = false;
-    private int tempo = 0;
 
     @Override
     protected void initSettings(GameSettings settings)
@@ -123,7 +122,10 @@ public class Main extends GameApplication
 
                 addUINode(vacilou);
 
-                getGameTimer().runOnceAfter(this::reiniciarPartida, Duration.seconds(2));
+                getGameTimer().runOnceAfter(() -> {
+                    reiniciarPartida();
+                    FXGL.removeUINode(vacilou);
+                }, Duration.seconds(2));
             }
         }
     }
