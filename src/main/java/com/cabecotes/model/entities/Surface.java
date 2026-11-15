@@ -8,21 +8,19 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
-
 import com.cabecotes.model.EntityType;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Floor {
+public abstract class Surface {
 
-    // Método base interno que lida com a física dos objetos estáticos
-    protected static Entity criarObjetoEstatico(double x, double y, double largura, double altura, float atrito, float restitution, EntityType tipo, Color cor) {
+    // superclasse criadora de superficies fodas
+    protected static Entity criadorDeSuperficies(double x, double y, double largura, double altura, float atrito, float restitution, EntityType tipo, Color cor) {
         PhysicsComponent physics = new PhysicsComponent();
         BodyDef bd = new BodyDef();
         bd.setType(BodyType.STATIC);
         physics.setBodyDef(bd);
 
-        // atrito e restituicao
         FixtureDef fd = new FixtureDef();
         fd.setRestitution(restitution);
         fd.setFriction(atrito);
@@ -36,10 +34,5 @@ public class Floor {
                 .collidable()
                 .bbox(new HitBox(BoundingShape.box(largura, altura)))
                 .buildAndAttach();
-    }
-
-    // metodo pra criar o chao
-    public static Entity criarChao(double x, double y, double largura, double altura) {
-        return criarObjetoEstatico(x, y, largura, altura, 0.5f, 0.0f, EntityType.FLOOR, Color.GREEN);
     }
 }

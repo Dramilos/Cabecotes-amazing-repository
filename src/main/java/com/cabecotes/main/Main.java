@@ -5,14 +5,12 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.physics.PhysicsComponent;
 import com.cabecotes.model.EntityType;
 import com.cabecotes.model.entities.*;
-import javafx.geometry.Pos;
+import com.cabecotes.model.entities.surfaces.*;
 import javafx.scene.input.KeyCode;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.cabecotes.model.components.PlayerControle;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
@@ -58,8 +56,8 @@ public class Main extends GameApplication
         chao = Floor.criarChao(0, 550, 1100, 50);
         traveE = Trave.criarTrave(1020, 340, 80, 10);
         traveD = Trave.criarTrave(0, 340, 80, 10);
-        paredeE = Floor.criarChao( 0, 0, 0,800);
-        paredeD = Floor.criarChao( 1100, 0, 0,800);
+        paredeE = Wall.criarParede( 0, 0, 0,800);
+        paredeD = Wall.criarParede( 1100, 0, 0,800);
     }
 
     @Override
@@ -89,8 +87,8 @@ public class Main extends GameApplication
         if (golE != null) golE.removeFromWorld();
 
         // recriar todas elas pra reiniciar
-        player1 = Player.criarPlayer(800, 500);
-        player2 = Player.criarPlayer(300, 500);
+        player1 = Player.criarPlayer(800, 500, "SPRLEO.png");
+        player2 = Player.criarPlayer(300, 500, "SPRART.png");
         bola = Ball.criarBola(550, 100);
         golD = Gol.criarGol(1020, 350, 70, 200);
         golE = Gol.criarGol(10, 350, 70, 200);

@@ -21,8 +21,8 @@ import static com.almasb.fxgl.dsl.FXGL.onKey;
 public class Player
 {
 
-    // Método que constrói e retorna a Entidade do Player pronta para o jogo
-    public static Entity criarPlayer(double x, double y)
+    // Metodo que constrói e retorna a Entidade do Player pronta para o jogo
+    public static Entity criarPlayer(double x, double y, String sprite)
     {
 
         // fisica do jogador
@@ -48,7 +48,7 @@ public class Player
         return FXGL.entityBuilder()
                 .type(EntityType.PLAYER)
                 .at(x, y)
-                .view(new Rectangle(40, 40, Color.BLUE))
+                .view(FXGL.texture(sprite))
                 .with(physics)
                 .with(new PlayerControle())
                 .collidable()
