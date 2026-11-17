@@ -88,8 +88,8 @@ public class Main extends GameApplication
         if (golE != null) golE.removeFromWorld();
 
         // recriar todas elas pra reiniciar
-        player1 = Player.criarPlayer(800, 500, "SPRLEO.png");
-        player2 = Player.criarPlayer(300, 500, "SPRART.png");
+        player1 = Player.criarPlayer(800, 480, "SPRLEO.png");
+        player2 = Player.criarPlayer(300, 480, "SPRART.png");
         bola = Ball.criarBola(550, 100);
         golD = Gol.criarGol(1020, 350, 70, 200);
         golE = Gol.criarGol(10, 350, 70, 200);

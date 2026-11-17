@@ -32,7 +32,7 @@ public class Ball {
         return FXGL.entityBuilder()
                 .type(EntityType.BALL)
                 .at(x, y)
-                .view(new Circle(12, 12, 12, Color.BLACK))
+                .view(FXGL.texture("BOLA.png"))
                 .with(physics)
                 .bbox(new HitBox(BoundingShape.circle(12)))
                 .collidable()

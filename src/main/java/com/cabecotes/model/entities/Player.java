@@ -33,10 +33,15 @@ public class Player
         physics.setBodyDef(bd);
         physics.addGroundSensor(
             new HitBox(
-            new Point2D(5, 46),
+            new Point2D(15, 58),
             BoundingShape.box(30, 4)
             )
         );
+
+        var imagemDoJogador = FXGL.texture(sprite);
+        imagemDoJogador.setFitWidth(55);
+        imagemDoJogador.setFitHeight(55);
+        imagemDoJogador.setPreserveRatio(true);
 
         // atrito do player
         FixtureDef fd = new FixtureDef();
@@ -48,12 +53,12 @@ public class Player
         return FXGL.entityBuilder()
                 .type(EntityType.PLAYER)
                 .at(x, y)
-                .view(FXGL.texture(sprite))
+                .view(imagemDoJogador)
                 .with(physics)
                 .with(new PlayerControle())
                 .collidable()
-                .bbox(new HitBox(BoundingShape.box(40,40)))
-                .bbox(new HitBox(new Point2D(5, 40), BoundingShape.box(30, 8)))
+                .bbox(new HitBox(BoundingShape.circle(30)))
+                .bbox(new HitBox(new Point2D(10, 50), BoundingShape.box(30, 8)))
                 .buildAndAttach();
     }
 }

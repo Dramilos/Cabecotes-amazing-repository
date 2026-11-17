@@ -52,7 +52,6 @@ public class Menu extends FXGLMenu {
 
         // Posicionamentos finos via StackPane ou translações
         StackPane.setAlignment(titulo, Pos.TOP_CENTER);
-        titulo.setTranslateY(500);
 
         StackPane.setAlignment(btnJogar, Pos.CENTER);
         btnJogar.setTranslateY(60);
@@ -64,6 +63,7 @@ public class Menu extends FXGLMenu {
     {
         // animacao do botao subir e descer
         TranslateTransition animacaoFlutuar = new TranslateTransition(Duration.seconds(1.5), objeto);
+        objeto.setTranslateY(100);
         animacaoFlutuar.setByY(distanciaY);
         animacaoFlutuar.setCycleCount(Animation.INDEFINITE);
         animacaoFlutuar.setAutoReverse(true);
