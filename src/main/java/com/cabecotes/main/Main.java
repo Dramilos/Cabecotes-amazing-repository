@@ -52,6 +52,7 @@ public class Main extends GameApplication
     @Override
     protected void initGame()
     {
+        FXGL.getGameScene().setBackgroundRepeat("background_clouds.png");
         reiniciarPartida();
         chao = Floor.criarChao(0, 550, 1100, 50);
         traveE = Trave.criarTrave(1020, 340, 80, 10);
