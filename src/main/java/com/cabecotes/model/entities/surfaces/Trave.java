@@ -8,6 +8,6 @@ public class Trave extends Floor {
 
     // criador de traves
     public static Entity criarTrave(double x, double y, double largura, double altura) {
-        return criadorDeSuperficies(x, y, largura, altura, 0.2f, 0.1f, EntityType.TRAVE, Color.AQUAMARINE);
+        return criadorDeSuperficies(x, y, largura, altura, 0.2f, 0f, EntityType.TRAVE, Color.web("#274a4f"));
     }
 }

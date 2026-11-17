@@ -14,6 +14,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import static com.cabecotes.main.Main.animarObjetos;
+
 public class Menu extends FXGLMenu {
 
     public Menu() {
@@ -29,6 +31,7 @@ public class Menu extends FXGLMenu {
         titulo.setFitWidth(500);
         titulo.setFitHeight(180);
         titulo.setPreserveRatio(true);
+        titulo.setTranslateY(100);
 
         arthur.setFitWidth(100);
         arthur.setFitHeight(100);
@@ -68,17 +71,5 @@ public class Menu extends FXGLMenu {
         btnJogar.setTranslateY(60);
 
         getContentRoot().getChildren().add(root);
-    }
-
-    private void animarObjetos(javafx.scene.Node objeto, double distanciaY)
-    {
-        // animacao do botao subir e descer
-        TranslateTransition animacaoFlutuar = new TranslateTransition(Duration.seconds(1.5), objeto);
-        objeto.setTranslateY(100);
-        animacaoFlutuar.setByY(distanciaY);
-        animacaoFlutuar.setCycleCount(Animation.INDEFINITE);
-        animacaoFlutuar.setAutoReverse(true);
-        animacaoFlutuar.setInterpolator(Interpolator.EASE_BOTH);
-        animacaoFlutuar.play();
     }
 }

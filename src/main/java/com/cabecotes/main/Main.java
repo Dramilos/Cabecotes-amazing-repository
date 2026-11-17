@@ -8,10 +8,14 @@ import com.almasb.fxgl.entity.Entity;
 import com.cabecotes.model.EntityType;
 import com.cabecotes.model.entities.*;
 import com.cabecotes.model.entities.surfaces.*;
+import javafx.animation.Animation;
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
 import javafx.scene.input.KeyCode;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.cabecotes.model.components.PlayerControle;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -63,10 +67,11 @@ public class Main extends GameApplication
         FXGL.getGameScene().setBackgroundRepeat("background_clouds.png");
         reiniciarPartida();
         chao = Floor.criarChao(0, 550, 1100, 50);
-        traveE = Trave.criarTrave(1020, 340, 80, 10);
-        traveD = Trave.criarTrave(0, 340, 80, 10);
+        traveE = Trave.criarTrave(1020, 341, 80, 10);
+        traveD = Trave.criarTrave(10, 341, 90, 10);
         paredeE = Wall.criarParede( 0, 0, 0,800);
         paredeD = Wall.criarParede( 1100, 0, 0,800);
+
     }
 
     @Override
@@ -88,18 +93,21 @@ public class Main extends GameApplication
             if (golLadoEsquerdo) {
                 pontosP1++; // Soma ponto
                 pontuacaoP1.setText(String.valueOf(pontosP1));
-                addUINode(golP2, 440, 340);
+                addUINode(golP2, 380, 310);
+                animarObjetos(golP2, 15);
                 FXGL.play("GOLART.wav");
             }
             // gol esquerdo
             else {
                 pontosP2++; // Soma ponto
                 pontuacaoP2.setText(String.valueOf(pontosP2));
-                addUINode(golP1, 440, 340);
-                FXGL.play("gol.wav");
+                addUINode(golP1, 380, 310);
+                animarObjetos(golP1, 15);
+                FXGL.play("GOLLEO.wav");
             }
 
-            addUINode(gol, 460, 300);
+            addUINode(gol, 410, 230);
+            animarObjetos(gol, 15);
 
             getGameTimer().runOnceAfter(() -> {
                 reiniciarPartida();
@@ -132,29 +140,37 @@ public class Main extends GameApplication
 
         gol = new Text("GOOOLLL");
         gol.setFill(Color.BLACK);
-        gol.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;");
+        gol.setStyle("-fx-font-size: 60px; -fx-font-weight: bold;");
 
         golP1 = new Text ("DO LEOZAO");
-        golP1.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;");
+        golP1.setStyle("-fx-font-size: 60px; -fx-font-weight: bold;");
 
         golP2 = new Text ("DO ARTHUR");
-        golP2.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;");
+        golP2.setStyle("-fx-font-size: 60px; -fx-font-weight: bold;");
     }
 
     private void reiniciarPartida() {
+        if(pontosP1 > 9)
+        {
+            vitoriaEpica(true);
+        }
+        else if(pontosP2 > 9)
+        {
+            vitoriaEpica(false);
+        }
         // tirar todas as entidades do mapa
         if (player1 != null) player1.removeFromWorld();
         if (player2 != null) player2.removeFromWorld();
         if (bola != null) bola.removeFromWorld();
-        if (golD != null) golD.removeFromWorld();
-        if (golE != null) golE.removeFromWorld();
+        if(golD != null) golD.removeFromWorld();
+        if(golE != null) golE.removeFromWorld();
 
         // recriar todas elas pra reiniciar
         player1 = Player.criarPlayer(800, 490, "SPRLEO.png");
         player2 = Player.criarPlayer(300, 490, "SPRART.png");
         bola = Ball.criarBola(550, 100);
-        golD = Gol.criarGol(1020, 350, 70, 200);
-        golE = Gol.criarGol(10, 350, 70, 200);
+        golD = Gol.criarGol(1020, 350, 70, 200, false);
+        golE = Gol.criarGol(10, 350, 70, 200, true);
 
         golMarcado = false;
         bolaIsolada = false;
@@ -206,6 +222,50 @@ public class Main extends GameApplication
 
         // Chute do Player 1
         onKeyDown(KeyCode.P, () -> player1.getComponent(PlayerControle.class).chutar(bola));
+    }
+
+    private static void vitoriaEpica(boolean p1Venceu)
+    {
+        Rectangle background = new Rectangle(FXGL.getAppWidth(), FXGL.getAppHeight(), Color.WHITE);
+        addUINode(background);
+
+        var ImgArt = texture("vitoriaArthur.jpg");
+        var ImgLeo = texture("vitoriaLeo.jpg");
+
+        Text vitoriaArthur = new Text("ARTHUR É O GRANDE VENCEDOR");
+        vitoriaArthur.setStyle("-fx-font-size: 60px; -fx-font-weight: bold;");
+        Text vitoriaLeo = new Text("LEOZAO É O GRANDE VENCEDOR");
+        vitoriaLeo.setStyle("-fx-font-size: 60px; -fx-font-weight: bold;");
+
+        if(p1Venceu)
+        {
+            addUINode(vitoriaArthur, 60, 200);
+            ImgArt.setFitWidth(500);
+            ImgArt.setFitHeight(300);
+            ImgArt.setTranslateX(280);
+            ImgArt.setTranslateY(250);
+            addUINode(ImgArt);
+        }
+        else
+        {
+            addUINode(vitoriaLeo, 60, 200);
+            ImgLeo.setFitWidth(500);
+            ImgLeo.setFitHeight(300);
+            ImgLeo.setTranslateX(280);
+            ImgLeo.setTranslateY(250);
+            addUINode(ImgLeo);
+        }
+    }
+
+    public static void animarObjetos(javafx.scene.Node objeto, double distanciaY)
+    {
+        // animacao do botao subir e descer
+        TranslateTransition animacaoFlutuar = new TranslateTransition(Duration.seconds(1.5), objeto);
+        animacaoFlutuar.setByY(distanciaY);
+        animacaoFlutuar.setCycleCount(Animation.INDEFINITE);
+        animacaoFlutuar.setAutoReverse(true);
+        animacaoFlutuar.setInterpolator(Interpolator.EASE_BOTH);
+        animacaoFlutuar.play();
     }
 
     public static void main(String[] args)

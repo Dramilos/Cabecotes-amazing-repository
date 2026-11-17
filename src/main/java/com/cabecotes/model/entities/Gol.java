@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Gol {
-    public static Entity criarGol(double x, double y, double largura, double altura) {
+    public static Entity criarGol(double x, double y, double largura, double altura, boolean golEsquerdo) {
         PhysicsComponent physics = new PhysicsComponent();
         BodyDef bd = new BodyDef();
         bd.setType(BodyType.STATIC);
@@ -23,10 +23,17 @@ public class Gol {
         FixtureDef fd = new FixtureDef();
         physics.setFixtureDef(fd);
 
+        // sprite
+        var spriteGol = FXGL.texture("GOL.png");
+        if(!golEsquerdo)
+        {
+            spriteGol.setScaleX(-1);
+        }
+
         return FXGL.entityBuilder()
                 .type(EntityType.GOL)
                 .at(x, y)
-                .view(new Rectangle(largura, altura, Color.CADETBLUE))
+                .view(spriteGol)
                 .bbox(new HitBox(BoundingShape.box(largura, altura)))
                 .collidable()
                 .buildAndAttach();
