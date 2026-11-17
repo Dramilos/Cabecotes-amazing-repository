@@ -26,6 +26,21 @@ public class Player
         BodyDef bd = new BodyDef();
         bd.setType(BodyType.DYNAMIC);
         physics.setBodyDef(bd);
+<<<<<<< Updated upstream
+=======
+        physics.addGroundSensor(
+            new HitBox(
+            new Point2D(5, 46),
+            BoundingShape.circle(15)
+            )
+        );
+
+        // atrito do player
+        FixtureDef fd = new FixtureDef();
+        fd.setFriction(0.9f);
+        fd.setDensity(1.8f);
+        physics.setFixtureDef(fd);
+>>>>>>> Stashed changes
 
         // construtor de entidades player
         return FXGL.entityBuilder()
@@ -34,7 +49,12 @@ public class Player
                 .with(physics)
                 .with(new PlayerControle())
                 .collidable()
+<<<<<<< Updated upstream
                 .bbox(new HitBox(BoundingShape.box(40, 40)))
+=======
+                .bbox(new HitBox(BoundingShape.circle(30)))
+                .bbox(new HitBox(new Point2D(5, 40), BoundingShape.box(30, 8)))
+>>>>>>> Stashed changes
                 .buildAndAttach();
     }
 }
