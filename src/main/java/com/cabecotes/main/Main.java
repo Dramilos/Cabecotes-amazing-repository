@@ -175,6 +175,7 @@ public class Main extends GameApplication
             if (x > 1100 || x < 0 || y > 800) {
                 bolaIsolada = true;
                 Text vacilou = new Text("isolou a bola lol");
+                play("isolou.wav");
                 vacilou.setFill(Color.BLACK);
                 vacilou.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;");
 
@@ -190,26 +191,6 @@ public class Main extends GameApplication
             }
         }
     }
-
-    /*
-    if (golMarcado) {
-            double x = bola.getPosition().getX();
-
-            // gol direito
-            if (x > 1000) {
-                pontosP1++; // Soma ponto
-                pontuacaoP1.setText(String.valueOf(pontosP1)); // Atualiza a tela na hora!
-            }
-            // gol esquerdo
-            else {
-                pontosP2++; // Soma ponto
-                pontuacaoP2.setText(String.valueOf(pontosP2)); // Atualiza a tela na hora!
-            }
-
-            FXGL.addUINode(gol, 300, 550);
-
-        }
-     */
 
     protected void initInput() {
         onKey(KeyCode.RIGHT, () -> player1.getComponent(PlayerControle.class).moverDireita());
