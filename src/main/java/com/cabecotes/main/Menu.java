@@ -29,6 +29,16 @@ public class Menu extends FXGLMenu {
         titulo.setFitHeight(180);
         titulo.setPreserveRatio(true);
 
+        arthur.setFitWidth(100);
+        arthur.setFitHeight(100);
+        arthur.setPreserveRatio(true);
+        arthur.setTranslateX(-300);
+
+        leo.setFitWidth(100);
+        leo.setFitHeight(100);
+        leo.setPreserveRatio(true);
+        leo.setTranslateX(300);
+
         animarObjetos(titulo, 15);
         animarObjetos(arthur, 15);
         animarObjetos(leo, 15);
