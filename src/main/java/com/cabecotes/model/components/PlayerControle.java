@@ -6,8 +6,11 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
+
+import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import com.almasb.fxgl.physics.PhysicsComponent;
+import com.cabecotes.model.EntityType;
 
 import static com.almasb.fxgl.dsl.FXGL.onKey;
 
@@ -30,4 +33,22 @@ public class PlayerControle extends Component
             physics.setVelocityY(-300);
         }
     }
+<<<<<<< Updated upstream
+=======
+
+public void chutar() {
+
+    if (entity.isType(EntityType.PLAYER1)) {
+        // Rotacionar o pé para a esquerda
+
+
+        
+    }
+    else if (entity.isType(EntityType.PLAYER2)) {
+        // Rotacionar o pé para a direita
+    }
+
+>>>>>>> Stashed changes
 }
+}       
+
