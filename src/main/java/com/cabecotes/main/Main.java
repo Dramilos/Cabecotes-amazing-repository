@@ -89,12 +89,14 @@ public class Main extends GameApplication
                 pontosP1++; // Soma ponto
                 pontuacaoP1.setText(String.valueOf(pontosP1));
                 addUINode(golP2, 440, 340);
+                FXGL.play("GOLART.wav");
             }
             // gol esquerdo
             else {
                 pontosP2++; // Soma ponto
                 pontuacaoP2.setText(String.valueOf(pontosP2));
                 addUINode(golP1, 440, 340);
+                FXGL.play("gol.wav");
             }
 
             addUINode(gol, 460, 300);

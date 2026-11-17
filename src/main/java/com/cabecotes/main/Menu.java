@@ -18,6 +18,7 @@ public class Menu extends FXGLMenu {
 
     public Menu() {
         super(MenuType.MAIN_MENU);
+        FXGL.play("menu.wav");
 
         // fundo do menu preto
         Rectangle background = new Rectangle(FXGL.getAppWidth(), FXGL.getAppHeight(), Color.WHITE);
