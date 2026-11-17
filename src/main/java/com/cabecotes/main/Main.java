@@ -30,6 +30,14 @@ public class Main extends GameApplication
     private boolean golMarcado = false;
     private boolean bolaIsolada = false;
 
+    private int pontosP1 = 0;
+    Text pontuacaoP1;
+    private int pontosP2 = 0;
+    Text pontuacaoP2;
+    Text golP1;
+    Text golP2;
+    Text gol;
+
     @Override
     protected void initSettings(GameSettings settings)
     {
@@ -75,8 +83,60 @@ public class Main extends GameApplication
 
             golMarcado = true;
 
-            getGameTimer().runOnceAfter(this::reiniciarPartida, Duration.seconds(2));
+            boolean golLadoEsquerdo = goalEntity.getPosition().getX() > 500;
+            // gol direito
+            if (golLadoEsquerdo) {
+                pontosP1++; // Soma ponto
+                pontuacaoP1.setText(String.valueOf(pontosP1));
+                addUINode(golP2, 440, 340);
+            }
+            // gol esquerdo
+            else {
+                pontosP2++; // Soma ponto
+                pontuacaoP2.setText(String.valueOf(pontosP2));
+                addUINode(golP1, 440, 340);
+            }
+
+            addUINode(gol, 460, 300);
+
+            getGameTimer().runOnceAfter(() -> {
+                reiniciarPartida();
+                removeUINode(gol);
+                removeUINode(golP1);
+                removeUINode(golP2);
+            }, Duration.seconds(2));
         });
+    }
+
+    protected void initUI()
+    {
+        Text placarTexto = new Text("PLACAR");
+        placarTexto.setFill(Color.WHITE);
+        placarTexto.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;");
+
+        // Placar P1
+        pontuacaoP1 = new Text("0");
+        pontuacaoP1.setFill(Color.WHITE);
+        pontuacaoP1.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;");
+
+        // Placar P2
+        pontuacaoP2 = new Text("0");
+        pontuacaoP2.setFill(Color.WHITE);
+        pontuacaoP2.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;");
+
+        FXGL.addUINode(placarTexto, 30, 60);
+        FXGL.addUINode(pontuacaoP1, 30, 110);
+        FXGL.addUINode(pontuacaoP2, 30, 160);
+
+        gol = new Text("GOOOLLL");
+        gol.setFill(Color.BLACK);
+        gol.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;");
+
+        golP1 = new Text ("DO LEOZAO");
+        golP1.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;");
+
+        golP2 = new Text ("DO ARTHUR");
+        golP2.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;");
     }
 
     private void reiniciarPartida() {
@@ -88,8 +148,8 @@ public class Main extends GameApplication
         if (golE != null) golE.removeFromWorld();
 
         // recriar todas elas pra reiniciar
-        player1 = Player.criarPlayer(800, 480, "SPRLEO.png");
-        player2 = Player.criarPlayer(300, 480, "SPRART.png");
+        player1 = Player.criarPlayer(800, 490, "SPRLEO.png");
+        player2 = Player.criarPlayer(300, 490, "SPRART.png");
         bola = Ball.criarBola(550, 100);
         golD = Gol.criarGol(1020, 350, 70, 200);
         golE = Gol.criarGol(10, 350, 70, 200);
@@ -113,10 +173,10 @@ public class Main extends GameApplication
             if (x > 1100 || x < 0 || y > 800) {
                 bolaIsolada = true;
                 Text vacilou = new Text("isolou a bola lol");
-                vacilou.setFont(Font.font(64));
                 vacilou.setFill(Color.BLACK);
+                vacilou.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;");
 
-                vacilou.setTranslateX(300);
+                vacilou.setTranslateX(420);
                 vacilou.setTranslateY(300);
 
                 addUINode(vacilou);
@@ -128,6 +188,26 @@ public class Main extends GameApplication
             }
         }
     }
+
+    /*
+    if (golMarcado) {
+            double x = bola.getPosition().getX();
+
+            // gol direito
+            if (x > 1000) {
+                pontosP1++; // Soma ponto
+                pontuacaoP1.setText(String.valueOf(pontosP1)); // Atualiza a tela na hora!
+            }
+            // gol esquerdo
+            else {
+                pontosP2++; // Soma ponto
+                pontuacaoP2.setText(String.valueOf(pontosP2)); // Atualiza a tela na hora!
+            }
+
+            FXGL.addUINode(gol, 300, 550);
+
+        }
+     */
 
     protected void initInput() {
         onKey(KeyCode.RIGHT, () -> player1.getComponent(PlayerControle.class).moverDireita());
