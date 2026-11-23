@@ -1,10 +1,12 @@
 package com.cabecotes.main;
 
+import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.physics.PhysicsComponent;
 import com.cabecotes.model.EntityType;
 import com.cabecotes.model.entities.*;
 import com.cabecotes.model.entities.surfaces.*;
@@ -19,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import com.almasb.fxgl.physics.PhysicsComponent;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
@@ -30,6 +33,7 @@ public class Main extends GameApplication
     private Entity chao, traveE, traveD;
     private Entity paredeE, paredeD;
     private Entity golD, golE;
+    private Entity pe1, pe2;
 
     private boolean golMarcado = false;
     private boolean bolaIsolada = false;
@@ -45,6 +49,9 @@ public class Main extends GameApplication
     @Override
     protected void initSettings(GameSettings settings)
     {
+        settings.setDeveloperMenuEnabled(true);
+        settings.setApplicationMode(ApplicationMode.DEVELOPER);
+
         // configuraçoes da janela do jogo
         settings.setWidth(1100);
         settings.setHeight(600);
@@ -71,6 +78,7 @@ public class Main extends GameApplication
         traveD = Trave.criarTrave(10, 341, 90, 10);
         paredeE = Wall.criarParede( 0, 0, 0,800);
         paredeD = Wall.criarParede( 1100, 0, 0,800);
+        
 
     }
 
@@ -116,6 +124,28 @@ public class Main extends GameApplication
                 removeUINode(golP2);
             }, Duration.seconds(2));
         });
+
+    onCollision(EntityType.PE, EntityType.BALL, (pe, bola) -> {
+
+    PlayerControle controle;
+
+    if (pe == pe1) {
+        controle = player1.getComponent(PlayerControle.class);
+    } else if (pe == pe2) {
+        controle = player2.getComponent(PlayerControle.class);
+    } else {
+        return;
+    }
+
+    if (controle.registrarAcerto()) {
+
+        PhysicsComponent fisicaBola =
+                bola.getComponent(PhysicsComponent.class);
+
+        fisicaBola.setVelocityX(700 * controle.getDirecao());
+        fisicaBola.setVelocityY(-350);
+    }
+});
     }
 
     protected void initUI()
@@ -150,6 +180,8 @@ public class Main extends GameApplication
     }
 
     private void reiniciarPartida() {
+
+
         if(pontosP1 > 9)
         {
             vitoriaEpica(true);
@@ -161,16 +193,24 @@ public class Main extends GameApplication
         // tirar todas as entidades do mapa
         if (player1 != null) player1.removeFromWorld();
         if (player2 != null) player2.removeFromWorld();
+        if (pe1 != null) pe1.removeFromWorld();
+        if (pe2 != null) pe2.removeFromWorld();
         if (bola != null) bola.removeFromWorld();
         if(golD != null) golD.removeFromWorld();
         if(golE != null) golE.removeFromWorld();
 
         // recriar todas elas pra reiniciar
-        player1 = Player.criarPlayer(800, 490, "SPRLEO.png");
-        player2 = Player.criarPlayer(300, 490, "SPRART.png");
+        player1 = Player.criarPlayer(800, 490, "SPRLEO.png", EntityType.PLAYER1);
+        player2 = Player.criarPlayer(300, 490, "SPRART.png",EntityType.PLAYER2);
         bola = Ball.criarBola(550, 100);
         golD = Gol.criarGol(1020, 350, 70, 200, false);
         golE = Gol.criarGol(10, 350, 70, 200, true);
+        
+        pe1 = Pe.criarPe(0, 0, -1);
+        pe2 = Pe.criarPe(0, 0, 1);
+
+        player1.getComponent(PlayerControle.class).configurarPe(pe1, -1);
+        player2.getComponent(PlayerControle.class).configurarPe(pe2, 1);
 
         golMarcado = false;
         bolaIsolada = false;
@@ -218,10 +258,10 @@ public class Main extends GameApplication
         onKey(KeyCode.W, () -> player2.getComponent(PlayerControle.class).pular());
 
         // Chute do Player 2
-        onKeyDown(KeyCode.SPACE, () -> player2.getComponent(PlayerControle.class).chutar(bola));
+        onKeyDown(KeyCode.SPACE, () -> player2.getComponent(PlayerControle.class).chutar());
 
         // Chute do Player 1
-        onKeyDown(KeyCode.P, () -> player1.getComponent(PlayerControle.class).chutar(bola));
+        onKeyDown(KeyCode.DOWN, () -> player1.getComponent(PlayerControle.class).chutar());
     }
 
     private static void vitoriaEpica(boolean p1Venceu)

@@ -14,13 +14,22 @@ import static com.almasb.fxgl.dsl.FXGL.onKey;
 public class PlayerControle extends Component
 {
     private PhysicsComponent physics;
+    private Entity pe;
+    private int direcao;
+
+    private boolean chutando = false;
+    private boolean bolaAtingida = false;
+
+    private double tempoChute = 0;
+
+    private static final double DURACAO_CHUTE = 0.25;
 
     public void moverDireita() {
-        physics.setVelocityX(210);
+        physics.setVelocityX(240);
     }
 
     public void moverEsquerda() {
-        physics.setVelocityX(-210);
+        physics.setVelocityX(-240);
     }
 
     public void pular() {
@@ -29,27 +38,65 @@ public class PlayerControle extends Component
         }
     
     }
+    public void chutar() {
 
-    public void chutar(Entity bola) {
-        
-        double distanciaX = bola.getCenter().getX() - entity.getCenter().getX();
-        double distanciaY = bola.getCenter().getY() - entity.getCenter().getY();
+    if (chutando || pe == null) {
+        return;
+    }
 
-        if (Math.abs(distanciaX) <= 65 && Math.abs(distanciaY) <= 65) {
+    chutando = true;
+    bolaAtingida = false;
+    tempoChute = 0;
+    }
 
-            PhysicsComponent fisicaBola = bola.getComponent(PhysicsComponent.class);
+    public void configurarPe(Entity pe, int direcao) {
+        this.pe = pe;
+        this.direcao = direcao;
+    }   
+    
+    
+    public boolean registrarAcerto() {
 
-            if (distanciaX >= 0) {
+    if (!chutando || bolaAtingida) {
+        return false;
+    }
 
-                fisicaBola.setVelocityX(420);
+    bolaAtingida = true;
+    return true;
+    }
 
-            } else {
+    public int getDirecao() {
+        return direcao;
+    }
 
-                fisicaBola.setVelocityX(-420);
+    @Override
+    public void onUpdate(double tpf) {
 
+    if (pe == null) {
+        return;
+    }
+
+    // Atualiza a posição do pé conforme o jogador
+    if (direcao == -1) {
+        pe.setPosition(entity.getX() + 5, entity.getY() + 49);
+    } else {
+        pe.setPosition(entity.getX() + 30, entity.getY() + 49);
+    }
+
+        if (chutando) {
+
+        tempoChute += tpf;
+
+        double progresso = Math.min(tempoChute / DURACAO_CHUTE, 1.0);
+
+        double angulo = 65 * Math.sin(Math.PI * progresso);
+
+        pe.setRotation(-angulo * direcao);
+
+            if (progresso >= 1.0) {
+                pe.setRotation(0);
+                chutando = false;
             }
-
-            fisicaBola.setVelocityY(-220);
         }
-    }       
+    }  
 }
