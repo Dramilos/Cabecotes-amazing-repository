@@ -142,8 +142,8 @@ public class Main extends GameApplication
         PhysicsComponent fisicaBola =
                 bola.getComponent(PhysicsComponent.class);
 
-        fisicaBola.setVelocityX(700 * controle.getDirecao());
-        fisicaBola.setVelocityY(-350);
+        fisicaBola.setVelocityX(600 * controle.getDirecao());
+        fisicaBola.setVelocityY(-360);
     }
 });
     }

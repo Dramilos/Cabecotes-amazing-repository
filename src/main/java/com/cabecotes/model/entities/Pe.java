@@ -17,7 +17,7 @@ public class Pe {
         Entity pe = FXGL.entityBuilder()
                 .type(EntityType.PE)
                 .at(x, y)
-                .view(new Rectangle(25, 12, Color.RED))
+                .view(new Rectangle(25, 12, Color.BLACK))
                 .bbox(new HitBox("PE", BoundingShape.box(25, 12)))
                 .collidable()
                 .buildAndAttach();

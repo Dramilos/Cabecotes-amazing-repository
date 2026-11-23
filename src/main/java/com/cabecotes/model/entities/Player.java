@@ -32,12 +32,7 @@ public class Player
         bd.setType(BodyType.DYNAMIC);
         bd.setFixedRotation(true);
         physics.setBodyDef(bd);
-        physics.addGroundSensor(
-            new HitBox(
-            new Point2D(15, 58),
-            BoundingShape.box(30, 4)
-            )
-        );
+        physics.addGroundSensor(new HitBox(new Point2D(15, 58), BoundingShape.box(30, 4) ));
 
         var imagemDoJogador = FXGL.texture(sprite);
         imagemDoJogador.setFitWidth(55);
@@ -46,8 +41,8 @@ public class Player
 
         // atrito do player
         FixtureDef fd = new FixtureDef();
-        fd.setFriction(0.9f);
-        fd.setDensity(1.8f);
+        fd.setFriction(1.3f);
+        fd.setDensity(5f);
         physics.setFixtureDef(fd);
 
 
