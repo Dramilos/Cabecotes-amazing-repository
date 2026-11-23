@@ -75,11 +75,19 @@ public class Main extends GameApplication
         if (golE != null) golE.removeFromWorld();
 
         // recriar todas elas pra reiniciar
+<<<<<<< Updated upstream
         player1 = Player.criarPlayer(800, 480, "SPRLEO.png", EntityType.PLAYER1);
         player2 = Player.criarPlayer(300, 480, "SPRART.png", EntityType.PLAYER2);
         bola = Ball.criarBola(550, 100);
         golD = Gol.criarGol(1020, 350, 70, 200);
         golE = Gol.criarGol(10, 350, 70, 200);
+=======
+        player1 = Player.criarPlayer(800, 490, "SPRLEO.png", EntityType.PLAYER1);
+        player2 = Player.criarPlayer(300, 490, "SPRART.png", EntityType.PLAYER1);
+        bola = Ball.criarBola(550, 100);
+        golD = Gol.criarGol(1020, 350, 70, 200);
+        golE = Gol.criarGol(10, 350, 70, 200 );
+>>>>>>> Stashed changes
 
         golMarcado = false;
         bolaIsolada = false;
