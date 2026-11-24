@@ -206,8 +206,8 @@ public class Main extends GameApplication
         golD = Gol.criarGol(1020, 350, 70, 200, false);
         golE = Gol.criarGol(10, 350, 70, 200, true);
         
-        pe1 = Pe.criarPe(0, 0, -1);
-        pe2 = Pe.criarPe(0, 0, 1);
+        pe1 = Pe.criarPe(0, 0, -1, "chuteiraLeo.png");
+        pe2 = Pe.criarPe(0, 0, 1, "chuteiraArt.png");
 
         player1.getComponent(PlayerControle.class).configurarPe(pe1, -1);
         player2.getComponent(PlayerControle.class).configurarPe(pe2, 1);

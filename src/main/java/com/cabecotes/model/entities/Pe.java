@@ -12,12 +12,12 @@ import javafx.scene.shape.Rectangle;
 
 public class Pe {
 
-    public static Entity criarPe(double x, double y, int direcao) {
+    public static Entity criarPe(double x, double y, int direcao, String chuteira) {
 
         Entity pe = FXGL.entityBuilder()
                 .type(EntityType.PE)
                 .at(x, y)
-                .view(new Rectangle(25, 12, Color.BLACK))
+                .view(chuteira)
                 .bbox(new HitBox("PE", BoundingShape.box(25, 12)))
                 .collidable()
                 .buildAndAttach();
