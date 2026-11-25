@@ -1,7 +1,9 @@
 package com.cabecotes.model;
 
 public enum EntityType {
-    PLAYER,
+    PLAYER1,
+    PLAYER2,
+    PE,
     FLOOR,
     BALL,
     GOL,

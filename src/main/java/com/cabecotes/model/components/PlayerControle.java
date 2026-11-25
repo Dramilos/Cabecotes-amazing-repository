@@ -1,55 +1,108 @@
 package com.cabecotes.model.components;
 
-import com.almasb.fxgl.app.GameApplication;
-import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
-import javafx.scene.input.KeyCode;
 import com.almasb.fxgl.physics.PhysicsComponent;
 
-import static com.almasb.fxgl.dsl.FXGL.onKey;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PlayerControle extends Component
 {
     private PhysicsComponent physics;
+    private Entity pe;
+    private int direcao;
+
+    private boolean chutando = false;
+    private boolean bolaAtingida = false;
+
+    private double tempoChute = 0;
+
+    private static final double DURACAO_CHUTE = 0.25;
+
+    private Set<Entity> contatosChao = new HashSet<>();
 
     public void moverDireita() {
-        physics.setVelocityX(210);
+        physics.setVelocityX(240);
     }
 
     public void moverEsquerda() {
-        physics.setVelocityX(-210);
+        physics.setVelocityX(-240);
     }
 
     public void pular() {
-        if (physics.isOnGround()) {
+        if (!contatosChao.isEmpty()) {
             physics.setVelocityY(-320);
         }
-    
     }
 
-    public void chutar(Entity bola) {
-        
-        double distanciaX = bola.getCenter().getX() - entity.getCenter().getX();
-        double distanciaY = bola.getCenter().getY() - entity.getCenter().getY();
+    public void entrouNoChao(Entity chao) {
+    contatosChao.add(chao);
+    }
 
-        if (Math.abs(distanciaX) <= 65 && Math.abs(distanciaY) <= 65) {
+    public void saiuDoChao(Entity chao) {
+        contatosChao.remove(chao);
+    }
 
-            PhysicsComponent fisicaBola = bola.getComponent(PhysicsComponent.class);
+    public void chutar() {
 
-            if (distanciaX >= 0) {
+    if (chutando || pe == null) {
+        return;
+    }
 
-                fisicaBola.setVelocityX(420);
+    chutando = true;
+    bolaAtingida = false;
+    tempoChute = 0;
+    }
 
-            } else {
+    public void configurarPe(Entity pe, int direcao) {
+        this.pe = pe;
+        this.direcao = direcao;
+    }   
+    
+    
+    public boolean registrarAcerto() {
 
-                fisicaBola.setVelocityX(-420);
+    if (!chutando || bolaAtingida) {
+        return false;
+    }
 
+    bolaAtingida = true;
+    return true;
+    }
+
+    public int getDirecao() {
+        return direcao;
+    }
+
+    @Override
+    public void onUpdate(double tpf) {
+
+    if (pe == null) {
+        return;
+    }
+
+    // Atualiza a posição do pé conforme o jogador
+    if (direcao == -1) {
+        pe.setPosition(entity.getX() + 5, entity.getY() + 49);
+    } else {
+        pe.setPosition(entity.getX() + 30, entity.getY() + 49);
+    }
+
+        if (chutando) {
+
+        tempoChute += tpf;
+
+        double progresso = Math.min(tempoChute / DURACAO_CHUTE, 1.0);
+
+        double angulo = 65 * Math.sin(Math.PI * progresso);
+
+        pe.setRotation(-angulo * direcao);
+
+            if (progresso >= 1.0) {
+                pe.setRotation(0);
+                chutando = false;
             }
-
-            fisicaBola.setVelocityY(-220);
         }
-    }       
+    }  
 }

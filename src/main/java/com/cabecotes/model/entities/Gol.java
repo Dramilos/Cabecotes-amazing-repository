@@ -9,8 +9,7 @@ import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.cabecotes.model.EntityType;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+
 
 public class Gol {
     public static Entity criarGol(double x, double y, double largura, double altura, boolean golEsquerdo) {
