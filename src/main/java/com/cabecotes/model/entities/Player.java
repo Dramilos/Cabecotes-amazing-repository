@@ -15,6 +15,7 @@ import javafx.geometry.Point2D;
 import com.cabecotes.model.EntityType;
 import com.cabecotes.model.components.PlayerControle;
 
+import com.almasb.fxgl.physics.SensorCollisionHandler;
 
 public class Player
 {
@@ -26,11 +27,40 @@ public class Player
 
         // fisica do jogador
         PhysicsComponent physics = new PhysicsComponent();
+        PlayerControle controle = new PlayerControle();
         BodyDef bd = new BodyDef();
         bd.setType(BodyType.DYNAMIC);
         bd.setFixedRotation(true);
         physics.setBodyDef(bd);
-        physics.addGroundSensor(new HitBox(new Point2D(15, 58), BoundingShape.box(30, 4) ));
+
+        physics.addSensor(
+        new HitBox(
+        new Point2D(15, 58),
+        BoundingShape.box(30, 4)
+    ),
+    new SensorCollisionHandler() {
+
+       @Override
+        protected void onCollisionBegin(Entity other) {
+            if (other.isType(EntityType.FLOOR) ||
+                other.isType(EntityType.PLAYER1) ||
+                other.isType(EntityType.PLAYER2)) {
+
+                controle.entrouNoChao(other);
+            }
+        }
+
+       @Override
+        protected void onCollisionEnd(Entity other) {
+            if (other.isType(EntityType.FLOOR) ||
+                other.isType(EntityType.PLAYER1) ||
+                other.isType(EntityType.PLAYER2)) {
+
+                controle.saiuDoChao(other);
+            }
+        }
+    }
+);
 
         var imagemDoJogador = FXGL.texture(sprite);
         imagemDoJogador.setFitWidth(55);
@@ -50,7 +80,7 @@ public class Player
                 .at(x, y)
                 .view(imagemDoJogador)
                 .with(physics)
-                .with(new PlayerControle())
+                .with(controle)
                 .collidable()
                 .bbox(new HitBox(BoundingShape.circle(30)))
                 .buildAndAttach();

@@ -4,6 +4,8 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 
+import java.util.HashSet;
+import java.util.Set;
 
 public class PlayerControle extends Component
 {
@@ -18,6 +20,8 @@ public class PlayerControle extends Component
 
     private static final double DURACAO_CHUTE = 0.25;
 
+    private Set<Entity> contatosChao = new HashSet<>();
+
     public void moverDireita() {
         physics.setVelocityX(240);
     }
@@ -27,11 +31,19 @@ public class PlayerControle extends Component
     }
 
     public void pular() {
-        if (physics.isOnGround()) {
+        if (!contatosChao.isEmpty()) {
             physics.setVelocityY(-320);
         }
-    
     }
+
+    public void entrouNoChao(Entity chao) {
+    contatosChao.add(chao);
+    }
+
+    public void saiuDoChao(Entity chao) {
+        contatosChao.remove(chao);
+    }
+
     public void chutar() {
 
     if (chutando || pe == null) {
