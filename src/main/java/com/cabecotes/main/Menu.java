@@ -3,16 +3,11 @@ package com.cabecotes.main;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
 import com.almasb.fxgl.dsl.FXGL;
-import javafx.animation.Animation;
-import javafx.animation.Interpolator;
-import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 
 import static com.cabecotes.main.Main.animarObjetos;
 

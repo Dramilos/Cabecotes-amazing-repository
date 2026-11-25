@@ -9,14 +9,12 @@ import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 
-import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+
 import javafx.geometry.Point2D;
 
 import com.cabecotes.model.EntityType;
 import com.cabecotes.model.components.PlayerControle;
-import static com.almasb.fxgl.dsl.FXGL.onKey;
+
 
 public class Player
 {

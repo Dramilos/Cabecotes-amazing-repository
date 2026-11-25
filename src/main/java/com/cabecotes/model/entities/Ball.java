@@ -8,11 +8,10 @@ import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
-import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
+
 
 import com.cabecotes.model.EntityType;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+
 
 public class Ball {
 

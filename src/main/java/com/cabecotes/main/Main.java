@@ -19,9 +19,8 @@ import com.cabecotes.model.components.PlayerControle;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import com.almasb.fxgl.physics.PhysicsComponent;
+
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
